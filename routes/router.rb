@@ -7,7 +7,8 @@ class Router
   ROUTES = {
     "GET" => {
       "/home" => :home,
-      "/answers" => :answers
+      "/answers" => :answers,
+      "/login" => :login
     },
     "POST" => {
       "/home" => :home
@@ -18,6 +19,7 @@ class Router
 
     http_method=env["REQUEST_METHOD"]
     path=env["PATH_INFO"]
+
     @name = ROUTES[http_method][path] ? ROUTES[http_method][path] : :not_found
     @status =  @name ? 200 : 404
   end

@@ -3,6 +3,10 @@ GEM
   specs:
     bcrypt (3.1.12)
     crass (1.0.4)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     json (2.1.0)
     mini_portile2 (2.3.0)
     nokogiri (1.8.4)
@@ -14,12 +18,16 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
       nokogumbo (~> 1.4)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bcrypt!
+  http-cookie!
   json!
   rack!
   sanitize!

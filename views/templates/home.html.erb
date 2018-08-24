@@ -12,20 +12,39 @@
   </head>
 
   <body class="bg-light">
-
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/answers">Survay Results</a>
+            </li>
+        </div>
+      </nav>
+    </header>
     <div class="container">
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <h2>Survay form about healthy style life</h2>
         <p class="lead">Below is an survay form to valute the healthy style life in Spain, please be honest the results
-                        will be part of an important scientis investigation. </p>
+                        will be part of an important scientific investigation. </p>
       </div>
 
       <div class="row">
         <div class="col-md-12 order-md-1">
           <div class="row">
             <div class="col-md-12 mb-3">
-              <p class="lead"><%= @data["message_form_survay"] %></p>
+              <% if @data["error"] %>
+                <p class="lead" style="color:red" ><%= @data["message_form_survay"] %></p>
+              <% else %>
+                <p class="lead" style="color:green" ><%= @data["message_form_survay"] %></p>
+              <% end %>
             </div>
           </div>
           <form class="needs-validation" method="POST" novalidate>
@@ -35,7 +54,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input type="text" class="form-control" name="mail" id="mail" placeholder="Mail" required>
+                <input type="email" class="form-control" name="mail" id="mail" placeholder="Mail" required>
                 <div class="invalid-feedback" style="width: 100%;">
                   Your mail is required.
                 </div>

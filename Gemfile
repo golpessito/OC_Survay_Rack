@@ -3,4 +3,5 @@ source 'https://rubygems.org' do
   gem 'sanitize' #Avoid xxs attack
   gem 'bcrypt' #encrypt password
   gem 'json' #Read and Write Json into Hash
+  gem 'http-cookie' #Use libray for cookies
 end
