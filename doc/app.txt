@@ -1,0 +1,30 @@
+﻿App.rb
+
+This class receive a request from the broswer it is the endpoint of the
+aplication.
+
+If we receive a post request (login form or answers form), it captures the params and depends on the target path (create a Answer or logged an user).
+
+This class use Route, View and Models class to compose the response
+
+Authenticaton.rb
+
+This class run on every request and only if we ask for 'answers' page, check
+if the user is authenticate if not redirect to login.
+We use cookies maintain the session open during 5 minutes.
+
+View.rb
+
+This class is the responsible to create the body response, depends on the target path.
+
+Read the templates files under templates folder, also is able to communicate the Model with the template trough binding trick!!.
+
+Models
+
+Answers.rb
+
+Keep the Bussines Logic from the survay answers also is the responsible of save the answers into the answers.json file
+
+User.rb
+
+Keep the Bussines Logic from authentication (read from answers.json file), our Authentication system is based of bcrypt

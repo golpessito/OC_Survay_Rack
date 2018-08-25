@@ -41,9 +41,9 @@
           <div class="row">
             <div class="col-md-12 mb-3">
               <% if @data["error"] %>
-                <p class="lead" style="color:red" ><%= @data["message_form_survay"] %></p>
+                <p class="lead" style="color:red" ><%= @data["msg_survay"] %></p>
               <% else %>
-                <p class="lead" style="color:green" ><%= @data["message_form_survay"] %></p>
+                <p class="lead" style="color:green" ><%= @data["msg_survay"] %></p>
               <% end %>
             </div>
           </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 mb-3">
-                <label for="alcohol">Do you drink alcohol? (per week)</label>
+                <label for="alcohol">Do you drink alcohol every week?</label>
                 <select class="custom-select d-block w-100" name="alcohol" id="alcohol" required>
                   <option value="never">Never</option>
                   <option value="on_weekend">On Weekend</option>
@@ -100,7 +100,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 mb-3">
-                <label for="hour_of_sport">How many hours do you do sport per week?</label>
+                <label for="hour_of_sport">How often do you do sport every day?</label>
                 <select class="custom-select d-block w-100" name="hour_of_sport" id="hour_of_sport" required>
                   <option value="0">0 hours</option>
                   <option value="1">1 hours</option>
@@ -112,7 +112,7 @@
             </div>
             <div class="row">
               <div class="col-md-12 mb-3">
-                <label for="litre_per_day">How many litres of water do you drink per day?</label>
+                <label for="litre_per_day">How many litres of water do you drink everyday?</label>
                 <select class="custom-select d-block w-100" name="litre_per_day" id="litre_per_day" required>
                   <option value="0">Less than 1 litre</option>
                   <option value="1">1 litre</option>

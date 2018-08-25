@@ -1,7 +1,4 @@
 require 'rack'
-require_relative '../views/view'
-require_relative '../routes/router'
-require_relative '../models/users'
 require_relative '../models/answers'
 
 class Authentication
@@ -11,27 +8,36 @@ class Authentication
   end
 
   def call (env)
+
+    #Response
     status, headers, body = @app.call(env)
     response=Rack::Response.new body,status,headers
-    request=Rack::Request.new(env)
     template_data = {}
 
-    if (env["REQUEST_METHOD"]=="GET" && env["PATH_INFO"] == "/answers")
+    #Request
+    request=Rack::Request.new(env)
+    request_method=env["REQUEST_METHOD"]
+    path_info=env["PATH_INFO"]
+
+    #The page protected
+    if (request_method=="GET" &&  path_info=="/answers")
+
+      view = View.new("/answers", template_data)
+
       unless request.cookies["logged"]
         #Redirect to login
-        view = View.new("/login", template_data)
-        body=[view.render]
-        response=Rack::Response.new body,status,headers
+        view.redirect_page("/login")
       else
-        #Redirect to answers
+        #Redirect to answers with all answers
         template_data=Answer.all
-        view = View.new("/answers", template_data)
-        body=[view.render]
-        response=Rack::Response.new body,status,headers
+        view.data=template_data
       end
+
+      body=[view.render]
+      response=Rack::Response.new body,status,headers
     end
 
     response.finish
   end
-
+  
 end
