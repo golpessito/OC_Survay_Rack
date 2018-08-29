@@ -17,14 +17,34 @@ class User
     end
   end
 
+  def self.create_user(user_name,password)
+    users=self.load_credentials
+
+    my_user={}
+    my_user["user_name"]=user_name
+    my_user["password"]=BCrypt::Password.create(password)
+
+    #Maybe I can add another answer without read all answers
+    json_users=users << my_user
+    File.open('db/users.json', 'w') {|file| file.write(JSON.generate(json_users))}
+    return true
+  end
+
   def self.autenticate?(user_name,password)
 
    my_credentials=self.load_credentials
-   user_name_credentials=my_credentials[0]["user_name"]
-   password_credentials=BCrypt::Password.new(my_credentials[0]["password"])
+   is_authenticate = false
 
-   ((user_name==user_name_credentials) && (password_credentials==password)) ? true : false
-   
+   my_credentials.each do |user|
+     user_name_credentials=user["user_name"]
+     password_credentials=password_credentials=BCrypt::Password.new(user["password"])
+     if ((user_name==user_name_credentials) && (password_credentials==password))
+       return true
+     end
+   end
+
+   return is_authenticate
+
  end
 
 end

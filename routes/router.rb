@@ -6,12 +6,13 @@ class Router
 
   ROUTES = {
     "GET" => {
-      "/home" => :home,
+      "/" => :home,
       "/answers" => :answers,
       "/login" => :login
     },
     "POST" => {
-      "/home" => :home
+      "/" => :home,
+      "/answers" => :answers
     }
   }
 

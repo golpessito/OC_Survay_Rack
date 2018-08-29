@@ -22,19 +22,19 @@ class App
 
     #Routing
     route=Router.new(env)
+    route_name=route.name
 
     if request_method=="POST"
-
-      case path_info
-        when "/home"
+      case route_name
+        when :home
           template_data=create_answer(env)
-        when "/answers"
+        when :answers
           #Check if the user is valid
           login=get_login_params(env)
           user_valid=User.autenticate?(login["user_name"],login["password"])
           authenticate_user(response_headers) if user_valid #Authenticate User With Cookie
 
-          #Redirect depens on if the user is valid
+          #Redirect depens on if the user is valid or not
           route.name=user_valid ? :answers : :login
           template_data=user_valid ? Answer.all : {}
       end

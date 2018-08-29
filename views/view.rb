@@ -12,6 +12,7 @@ class View
 
   def redirect_page(page)
     #Create the full path (independent of the O.S)
+    directory=File.join(File.dirname(__FILE__), "./templates/#{page}.html.erb")
     file=File.join(File.dirname(__FILE__), "./templates/#{page}.html.erb")
     @template=File.read(file)
   end
