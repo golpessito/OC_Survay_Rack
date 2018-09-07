@@ -5,13 +5,14 @@ class User
 
   attr_accessor :user_name, :password
 
-  def self.dir_db(env="")
+  def self.dir_db
+    env="_test" if ENV["test"]
     dir_db=File.dirname(__FILE__) + "/../db/users#{env}.json"
   end
 
-  def self.load_credentials(env="")
+  def self.load_credentials
     begin
-      db=dir_db(env)
+      db=dir_db
       json_users=File.read("#{db}")
       return JSON.parse(json_users)
     rescue
@@ -21,11 +22,11 @@ class User
     end
   end
 
-  def self.create_user(user_name,password,env="")
+  def self.create_user(user_name,password)
 
-    db=dir_db(env)
+    db=dir_db
 
-    users=self.load_credentials(env)
+    users=self.load_credentials
     my_user={}
     my_user["user_name"]=user_name
     my_user["password"]=BCrypt::Password.create(password)
@@ -36,9 +37,9 @@ class User
     return true
   end
 
-  def self.autenticate?(user_name,password,env="")
+  def self.autenticate?(user_name,password)
 
-   my_credentials=self.load_credentials(env)
+   my_credentials=self.load_credentials
    is_authenticate = false
 
    my_credentials.each do |user|

@@ -4,6 +4,8 @@ require_relative '../models/users'
 class UserTest < Test::Unit::TestCase
   class << self
     def startup
+      ENV["test"]="test"
+
       post_fixtures = [
         {
           username: 'maria',
@@ -13,7 +15,7 @@ class UserTest < Test::Unit::TestCase
           username: 'daniel',
           password: 'daniel_secret'
         }
-      ].map { |params| User.create_user(params[:username],params[:password],"_test")}
+      ].map { |params| User.create_user(params[:username],params[:password])}
     end
 
     def shutdown
@@ -23,7 +25,8 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_user_names_exists
-     credentials=credentials=User.load_credentials("_test")
+
+     credentials=credentials=User.load_credentials
 
      user_name="#{credentials[0]['user_name']}"
      assert_equal("maria",user_name, "Maria should be exist")
@@ -33,20 +36,18 @@ class UserTest < Test::Unit::TestCase
   end
 
   def test_user_uthenticated
-     credentials=credentials=User.load_credentials("_test")
+     credentials=credentials=User.load_credentials
 
      user_name="#{credentials[0]['user_name']}"
-     assert(User.autenticate?(user_name,"maria_secret","_test"),"Should be autenticated")
+     assert(User.autenticate?(user_name,"maria_secret"),"Should be autenticated")
 
      user_name="#{credentials[1]['user_name']}"
-     assert(User.autenticate?(user_name,"daniel_secret","_test"),"Should be autenticated")
+     assert(User.autenticate?(user_name,"daniel_secret"),"Should be autenticated")
   end
 
   def test_create_user
-    User.create_user("pedro","secret","_test")
-    assert(User.autenticate?("pedro","secret","_test"),"Should be autenticated")
+    User.create_user("pedro","secret")
+    assert(User.autenticate?("pedro","secret"),"Should be autenticated")
   end
-
-
 
 end

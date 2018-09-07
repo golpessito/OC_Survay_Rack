@@ -4,6 +4,11 @@ class Answer
 
   attr_accessor :mail, :answers
 
+  def self.dir_db
+    env="_test" if ENV["test"]
+    dir_db=File.dirname(__FILE__) + "/../db/answers#{env}.json"
+  end
+
   def initialize(mail, answers)
     @mail=mail
     @answers=answers
@@ -11,8 +16,8 @@ class Answer
 
   def self.all
     begin
-      ## I have to use __FILE__
-      json_answers=File.read("db/answers.json")
+      db=dir_db
+      json_answers=File.read("#{db}")
       return JSON.parse(json_answers)
     rescue
       #Check this because if is the answers.json is ba we will be reset
@@ -44,16 +49,16 @@ class Answer
 
   def self.create(mail,answers)
     unless self.exists?(mail)
+      db=dir_db
       my_answers={}
       my_answers["mail"]=mail
       my_answers["answers"]=answers
 
       #Maybe I can add another answer without read all answers
       json_answers=self.all << my_answers
-      File.open('db/answers.json', 'w') {|file| file.write(JSON.generate(json_answers))}
+      File.open("#{db}", 'w') {|file| file.write(JSON.generate(json_answers))}
       return true
     else
-      puts "This mail has already used"
       return nil
     end
   end
