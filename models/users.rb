@@ -5,11 +5,15 @@ class User
 
   attr_accessor :user_name, :password
 
-  def self.load_credentials
+  def self.dir_db(env="")
+    dir_db=File.dirname(__FILE__) + "/../db/users#{env}.json"
+  end
+
+  def self.load_credentials(env="")
     begin
-      ## I have to use __FILE__
-      json_answers=File.read("db/users.json")
-      return JSON.parse(json_answers)
+      db=dir_db(env)
+      json_users=File.read("#{db}")
+      return JSON.parse(json_users)
     rescue
       #Check this because if is the answers.json is bad we will be reset
       #the file
@@ -17,22 +21,24 @@ class User
     end
   end
 
-  def self.create_user(user_name,password)
-    users=self.load_credentials
+  def self.create_user(user_name,password,env="")
 
+    db=dir_db(env)
+
+    users=self.load_credentials(env)
     my_user={}
     my_user["user_name"]=user_name
     my_user["password"]=BCrypt::Password.create(password)
 
     #Maybe I can add another answer without read all answers
     json_users=users << my_user
-    File.open('db/users.json', 'w') {|file| file.write(JSON.generate(json_users))}
+    File.open("#{db}", 'w') {|file| file.write(JSON.generate(json_users))}
     return true
   end
 
-  def self.autenticate?(user_name,password)
+  def self.autenticate?(user_name,password,env="")
 
-   my_credentials=self.load_credentials
+   my_credentials=self.load_credentials(env)
    is_authenticate = false
 
    my_credentials.each do |user|
